@@ -4,12 +4,13 @@
 
 using namespace std;
 
-int main() {
+int main()
+{
     // Create Admin object which is the main controller
     Admin admin;
-    
+
     // Run the main application loop
     admin.run();
-    
+
     return 0;
 }

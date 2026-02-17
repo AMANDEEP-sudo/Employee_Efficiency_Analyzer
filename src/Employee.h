@@ -5,7 +5,8 @@
 #include <string>
 using namespace std;
 
-class Employee {
+class Employee
+{
 private:
     int employee_id;
     string name;
@@ -21,7 +22,7 @@ private:
 public:
     Employee();
     Employee(int id, string n, string d, int year);
-    
+
     // Setters
     void setEmployeeId(int id);
     void setName(string n);
@@ -32,7 +33,7 @@ public:
     void setEfficiencyScore(double score);
     void setTotalRating(double rating);
     void setFeedbackCount(int count);
-    
+
     // Getters
     int getEmployeeId() const;
     string getName() const;
@@ -44,14 +45,13 @@ public:
     double getTotalRating() const;
     int getFeedbackCount() const;
     vector<int> getTaskIds() const;
-    
+
     // Methods
     void addTask(int task_id);
     void completeTask(int task_id);
     void updateRating(double rating);
     double calculateEfficiency();
     void displayInfo() const;
-    
 };
 
 #endif

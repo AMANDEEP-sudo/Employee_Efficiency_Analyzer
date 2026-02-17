@@ -5,7 +5,8 @@
 #include <ctime>
 using namespace std;
 
-class Feedback {
+class Feedback
+{
 private:
     int feedback_id;
     int employee_id;
@@ -18,7 +19,7 @@ private:
 public:
     Feedback();
     Feedback(int fid, int eid, string hash);
-    
+
     // Setters
     void setFeedbackId(int id);
     void setEmployeeId(int id);
@@ -27,7 +28,7 @@ public:
     void setComment(string c);
     void setTimestamp(string ts);
     void setIsSubmitted(bool status);
-    
+
     // Getters
     int getFeedbackId() const;
     int getEmployeeId() const;
@@ -36,7 +37,7 @@ public:
     string getComment() const;
     string getTimestamp() const;
     bool getIsSubmitted() const;
-    
+
     // Methods
     void submitFeedback();
     void displayFeedback() const;

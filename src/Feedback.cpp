@@ -6,12 +6,12 @@
 #include <sstream>
 using namespace std;
 
-Feedback::Feedback() : feedback_id(0), employee_id(0), 
-                       hashed_citizen_aadhaar(""), rating(0), 
+Feedback::Feedback() : feedback_id(0), employee_id(0),
+                       hashed_citizen_aadhaar(""), rating(0),
                        comment(""), timestamp(""), is_submitted(false) {}
 
 Feedback::Feedback(int fid, int eid, string hash)
-    : feedback_id(fid), employee_id(eid), hashed_citizen_aadhaar(hash), 
+    : feedback_id(fid), employee_id(eid), hashed_citizen_aadhaar(hash),
       rating(0), comment(""), timestamp(""), is_submitted(false) {}
 
 void Feedback::setFeedbackId(int id) { feedback_id = id; }
@@ -30,7 +30,8 @@ string Feedback::getComment() const { return comment; }
 string Feedback::getTimestamp() const { return timestamp; }
 bool Feedback::getIsSubmitted() const { return is_submitted; }
 
-void Feedback::setCurrentTimestamp() {
+void Feedback::setCurrentTimestamp()
+{
     time_t now = time(0);
     char timestamp_str[100];
     struct tm timeinfo = *localtime(&now);
@@ -38,24 +39,28 @@ void Feedback::setCurrentTimestamp() {
     timestamp = timestamp_str;
 }
 
-void Feedback::submitFeedback() {
-    if (rating < RATING_MIN || rating > RATING_MAX) {
-        cout << "Invalid rating! Please enter rating between " 
+void Feedback::submitFeedback()
+{
+    if (rating < RATING_MIN || rating > RATING_MAX)
+    {
+        cout << "Invalid rating! Please enter rating between "
              << RATING_MIN << " and " << RATING_MAX << endl;
         return;
     }
-    
-    if (comment.empty()) {
+
+    if (comment.empty())
+    {
         cout << "Comment cannot be empty!" << endl;
         return;
     }
-    
+
     setCurrentTimestamp();
     is_submitted = true;
     cout << "Feedback submitted successfully!" << endl;
 }
 
-void Feedback::displayFeedback() const {
+void Feedback::displayFeedback() const
+{
     cout << "\n========== FEEDBACK DETAILS ==========" << endl;
     cout << "Feedback ID: " << feedback_id << endl;
     cout << "Employee ID: " << employee_id << endl;
@@ -64,5 +69,6 @@ void Feedback::displayFeedback() const {
     cout << "Comment: " << comment << endl;
     cout << "Submitted: " << (is_submitted ? "YES" : "NO") << endl;
     cout << "Timestamp: " << timestamp << endl;
-    cout << "=====================================\n" << endl;
+    cout << "=====================================\n"
+         << endl;
 }

@@ -5,6 +5,7 @@ A comprehensive C++ console-based application for monitoring employee performanc
 ## Features
 
 ### Core Functionality
+
 - **Employee Management**: Add, view, and manage employee records
 - **Task Management**: Assign tasks with deadlines and track completion
 - **Efficiency Calculation**: Automatic computation of efficiency scores based on:
@@ -14,6 +15,7 @@ A comprehensive C++ console-based application for monitoring employee performanc
   - Delay penalties
 
 ### Security & Verification
+
 - **Simulated Aadhaar Authentication**: 12-digit Aadhaar format validation
 - **OTP Generation & Verification**: 6-digit random OTP with:
   - 5-minute expiry
@@ -22,6 +24,7 @@ A comprehensive C++ console-based application for monitoring employee performanc
 - **Duplicate Feedback Prevention**: One feedback per citizen per employee
 
 ### Reporting & Analytics
+
 - **Efficiency Reports**: Individual and aggregate employee performance
 - **Department-wise Ranking**: Compare employees within departments
 - **Monthly Performance Summary**: Overall system statistics
@@ -59,6 +62,7 @@ Employee_efficiency_tool/
 ### Using G++ (Direct Compilation)
 
 **Windows:**
+
 ```bash
 cd Employee_efficiency_tool
 g++ -std=c++17 -o efficiency_tracker.exe src/*.cpp
@@ -66,6 +70,7 @@ efficiency_tracker.exe
 ```
 
 **Linux/Mac:**
+
 ```bash
 cd Employee_efficiency_tool
 g++ -std=c++17 -o efficiency_tracker src/*.cpp
@@ -84,6 +89,7 @@ make help     # Show available targets
 ## Usage
 
 ### Main Menu
+
 ```
 1. Admin Login
 2. Citizen Feedback Portal
@@ -92,10 +98,12 @@ make help     # Show available targets
 ```
 
 ### Admin Login
+
 - **Default Username:** admin
 - **Default Password:** admin123
 
 ### Admin Features
+
 - Add employees and departments
 - Assign tasks with deadlines
 - Track task completion
@@ -105,6 +113,7 @@ make help     # Show available targets
 - View audit logs
 
 ### Citizen Feedback Process
+
 1. Enter 12-digit Aadhaar ID
 2. Receive OTP (displayed in console for demo)
 3. Verify OTP (5-minute expiry)
@@ -114,7 +123,7 @@ make help     # Show available targets
 ## Efficiency Score Formula
 
 ```
-Score = (completion_rate × 50) + (avg_rating × 30) 
+Score = (completion_rate × 50) + (avg_rating × 30)
         + (on_time_pct × 20) - delay_penalty
 
 Range: 0-100
@@ -125,11 +134,13 @@ Range: 0-100
 All data persists in pipe-delimited `.dat` files:
 
 **employees.dat format:**
+
 ```
 id|name|department|total_tasks|completed_tasks|efficiency_score|feedback_count
 ```
 
 **feedback.dat format:**
+
 ```
 id|employee_id|hashed_aadhaar|rating|comment|timestamp|submitted
 ```
@@ -142,22 +153,23 @@ id|employee_id|hashed_aadhaar|rating|comment|timestamp|submitted
 
 ## Class Overview
 
-| Class | Purpose |
-|-------|---------|
-| `Employee` | Employee records and efficiency tracking |
-| `Task` | Task management and deadline tracking |
-| `Citizen` | Citizen registry and Aadhaar validation |
-| `OTPManager` | OTP generation and verification |
-| `Feedback` | Feedback submission and storage |
-| `Department` | Department management and reporting |
-| `Database` | File I/O and data persistence |
-| `Admin` | Main control panel and menu system |
-| `EfficiencyCalculator` | Score computation |
-| `Utils` | Utility functions |
+| Class                  | Purpose                                  |
+| ---------------------- | ---------------------------------------- |
+| `Employee`             | Employee records and efficiency tracking |
+| `Task`                 | Task management and deadline tracking    |
+| `Citizen`              | Citizen registry and Aadhaar validation  |
+| `OTPManager`           | OTP generation and verification          |
+| `Feedback`             | Feedback submission and storage          |
+| `Department`           | Department management and reporting      |
+| `Database`             | File I/O and data persistence            |
+| `Admin`                | Main control panel and menu system       |
+| `EfficiencyCalculator` | Score computation                        |
+| `Utils`                | Utility functions                        |
 
 ## Testing Workflow
 
 1. **Run the application**
+
    ```bash
    ./efficiency_tracker
    ```
@@ -208,6 +220,7 @@ id|employee_id|hashed_aadhaar|rating|comment|timestamp|submitted
 ## Configuration
 
 Edit `src/Constants.h` to modify:
+
 - OTP expiry time (default: 5 minutes)
 - Maximum OTP attempts (default: 3)
 - Efficiency score weights
@@ -216,6 +229,7 @@ Edit `src/Constants.h` to modify:
 ## Support
 
 For detailed implementation information, see:
+
 - `C++_IMPLEMENTATION_GUIDE.txt` - Comprehensive design documentation
 - `employee_efficiency.txt` - Original SRS document
 - Source files (.h/.cpp) - Inline comments

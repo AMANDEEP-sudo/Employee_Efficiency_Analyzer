@@ -4,7 +4,8 @@
 #include <string>
 using namespace std;
 
-class Task {
+class Task
+{
 private:
     int task_id;
     int employee_id;
@@ -17,7 +18,7 @@ private:
 public:
     Task();
     Task(int tid, int eid, string desc, string dl);
-    
+
     // Setters
     void setTaskId(int id);
     void setEmployeeId(int id);
@@ -26,7 +27,7 @@ public:
     void setCompletionDate(string date);
     void setIsCompleted(bool status);
     void setIsDelayed(bool status);
-    
+
     // Getters
     int getTaskId() const;
     int getEmployeeId() const;
@@ -35,7 +36,7 @@ public:
     string getCompletionDate() const;
     bool getIsCompleted() const;
     bool getIsDelayed() const;
-    
+
     // Methods
     void markComplete(string comp_date);
     bool checkDelay();

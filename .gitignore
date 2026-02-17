@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # C++ Ignores
 *.o
 *.obj
@@ -90,3 +91,46 @@ htmlcov/
 
 # VS Code Workspace
 .vscode/settings.local.json
+=======
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Linker files
+*.ilk
+
+# Debugger Files
+*.pdb
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# debug information files
+*.dwo
+>>>>>>> 422675dab248b403a1c181e5f362fe25e096dbf0

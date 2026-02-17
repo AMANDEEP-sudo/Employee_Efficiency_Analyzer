@@ -10,42 +10,43 @@
 #include "Feedback.h"
 using namespace std;
 
-class Database {
+class Database
+{
 private:
     string employees_file;
     string tasks_file;
     string citizens_file;
     string feedback_file;
     string audit_log_file;
-    
+
     // Helper function to split strings
-    vector<string> splitString(const string& str, char delimiter);
+    vector<string> splitString(const string &str, char delimiter);
 
 public:
     Database();
-    
+
     // Employee operations
-    void saveEmployee(const Employee& emp);
-    void loadEmployees(vector<Employee>& employees);
-    
+    void saveEmployee(const Employee &emp);
+    void loadEmployees(vector<Employee> &employees);
+
     // Task operations
-    void saveTask(const Task& task);
-    void loadTasks(vector<Task>& tasks);
-    
+    void saveTask(const Task &task);
+    void loadTasks(vector<Task> &tasks);
+
     // Citizen operations
-    void saveCitizen(const Citizen& citizen);
-    void loadCitizens(vector<Citizen>& citizens);
-    
+    void saveCitizen(const Citizen &citizen);
+    void loadCitizens(vector<Citizen> &citizens);
+
     // Feedback operations
-    void saveFeedback(const Feedback& fb);
-    void loadFeedback(vector<Feedback>& feedbacks);
-    
+    void saveFeedback(const Feedback &fb);
+    void loadFeedback(vector<Feedback> &feedbacks);
+
     // Audit log operations
-    void logAudit(const string& action, const string& user);
+    void logAudit(const string &action, const string &user);
     void readAuditLog();
-    
+
     // CSV Export operations
-    void exportEmployeesToCSV(const vector<Employee>& employees, const vector<Task>& tasks);
+    void exportEmployeesToCSV(const vector<Employee> &employees, const vector<Task> &tasks);
 };
 
 #endif

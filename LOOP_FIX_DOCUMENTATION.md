@@ -7,6 +7,7 @@ The `filterEmployees()` function in `src/Admin.cpp` had several critical issues 
 ### Issues Found
 
 **Issue 1: Input Buffer Not Cleared**
+
 ```cpp
 // BEFORE (WRONG)
 int choice;
@@ -33,6 +34,7 @@ cin.ignore();  // ← Clear buffer again
 ---
 
 **Issue 2: Missing Return Statements**
+
 ```cpp
 // BEFORE (WRONG)
 void Admin::filterEmployees() {
@@ -64,6 +66,7 @@ else {
 ---
 
 **Issue 3: Inconsistent Result Display**
+
 ```cpp
 // BEFORE (WRONG)
 vector<Employee> filtered_employees;
@@ -108,6 +111,7 @@ if (show_results) {
 ---
 
 **Issue 4: Missing Input Validation After cin**
+
 ```cpp
 // BEFORE (WRONG)
 if (sub_choice == 1) {
@@ -137,12 +141,13 @@ show_results = true;  // ← Set flag
 ## Complete Fix Summary
 
 ### Before (BROKEN)
+
 ```cpp
 void Admin::filterEmployees() {
     // ... setup code ...
-    
+
     vector<Employee> filtered_employees;  // No tracking flag
-    
+
     if (choice == 1) {
         // ... filter code ...
         // No cin.ignore() after getline()
@@ -151,7 +156,7 @@ void Admin::filterEmployees() {
         cin >> year;  // ← Missing cin.ignore()!
     }
     // ... no case 5 handling ...
-    
+
     // Always tries to display
     if (!filtered_employees.empty()) {
         // ... display code ...
@@ -161,13 +166,14 @@ void Admin::filterEmployees() {
 ```
 
 ### After (FIXED)
+
 ```cpp
 void Admin::filterEmployees() {
     // ... setup code ...
-    
+
     vector<Employee> filtered_employees;
     bool show_results = false;  // ← New flag
-    
+
     if (choice == 1) {
         // ... filter code ...
         cin.ignore();  // ← Clear buffer
@@ -176,7 +182,7 @@ void Admin::filterEmployees() {
     else if (choice == 2) {
         cin >> year;
         cin.ignore();  // ← Clear buffer
-        
+
         // ... filter code ...
         show_results = true;
     }
@@ -189,7 +195,7 @@ void Admin::filterEmployees() {
         cin.get();
         return;  // ← Exit on error
     }
-    
+
     // Only display if valid
     if (show_results) {
         if (!filtered_employees.empty()) {
@@ -198,7 +204,7 @@ void Admin::filterEmployees() {
             cout << "No matches!" << endl;
         }
     }
-    
+
     cout << "\nPress Enter to continue...";
     cin.get();  // ← Wait before return
 }
@@ -209,6 +215,7 @@ void Admin::filterEmployees() {
 ## Compilation Result
 
 ### Before
+
 ```
 Compilation successful but with runtime issues:
 - Input hanging/skipping
@@ -217,6 +224,7 @@ Compilation successful but with runtime issues:
 ```
 
 ### After
+
 ```
 ✓ Clean compilation
 ✓ Proper input handling
@@ -230,26 +238,31 @@ Compilation successful but with runtime issues:
 ## Testing the Fix
 
 ### Test Case 1: Valid Department Filter
+
 ```
 Input: 1 → "IT" → Returns: [emp1, emp2] ✓
 ```
 
 ### Test Case 2: Valid Year Filter
+
 ```
 Input: 2 → 2024 → Returns: [emp1, emp2, emp3] ✓
 ```
 
 ### Test Case 3: Invalid Choice
+
 ```
 Input: 99 → Shows error, returns to menu ✓
 ```
 
 ### Test Case 4: Back to Menu
+
 ```
 Input: 5 → Exits cleanly ✓
 ```
 
 ### Test Case 5: No Matches
+
 ```
 Input: 1 → "NonExistent" → Shows "No employees match" ✓
 ```
@@ -258,25 +271,27 @@ Input: 1 → "NonExistent" → Shows "No employees match" ✓
 
 ## Code Quality Improvements
 
-| Aspect | Before | After |
-|--------|--------|-------|
-| Input Handling | ❌ Inconsistent | ✅ Proper buffer clearing |
-| Exit Paths | ❌ Missing returns | ✅ Explicit returns |
-| Error Handling | ❌ Continues on error | ✅ Exits gracefully |
-| Logic Flow | ❌ Complex | ✅ Clear flag-based |
-| User Experience | ❌ Hanging/confusing | ✅ Responsive & clear |
+| Aspect          | Before                | After                     |
+| --------------- | --------------------- | ------------------------- |
+| Input Handling  | ❌ Inconsistent       | ✅ Proper buffer clearing |
+| Exit Paths      | ❌ Missing returns    | ✅ Explicit returns       |
+| Error Handling  | ❌ Continues on error | ✅ Exits gracefully       |
+| Logic Flow      | ❌ Complex            | ✅ Clear flag-based       |
+| User Experience | ❌ Hanging/confusing  | ✅ Responsive & clear     |
 
 ---
 
 ## Best Practices Applied
 
 1. **Always clear input buffer after `cin >>`**
+
    ```cpp
    cin >> value;
    cin.ignore();  // Important!
    ```
 
 2. **Use flags for complex conditional logic**
+
    ```cpp
    bool should_display = false;
    // ... conditions that set flag ...
@@ -284,6 +299,7 @@ Input: 1 → "NonExistent" → Shows "No employees match" ✓
    ```
 
 3. **Explicit return statements**
+
    ```cpp
    if (invalid) {
        error_message();
@@ -292,6 +308,7 @@ Input: 1 → "NonExistent" → Shows "No employees match" ✓
    ```
 
 4. **Validate all input branches**
+
    ```cpp
    if (condition1) { /* ... */ }
    else if (condition2) { /* ... */ }
@@ -310,6 +327,7 @@ Input: 1 → "NonExistent" → Shows "No employees match" ✓
 ## Files Modified
 
 **File**: `src/Admin.cpp`
+
 - **Lines Changed**: ~50 lines in filterEmployees() function
 - **Method**: Input buffer clearing + flag-based logic + explicit returns
 - **Status**: ✅ Compiled and tested successfully
@@ -327,11 +345,13 @@ Input: 1 → "NonExistent" → Shows "No employees match" ✓
 ## Conclusion
 
 The loop error in the filter function was caused by a combination of:
+
 1. Improper input buffer management
 2. Missing return statements
 3. Complex conditional logic without clear flow
 
 The fix ensures:
+
 - ✅ Proper C++ input stream handling
 - ✅ Clear exit paths for all conditions
 - ✅ Robust error handling

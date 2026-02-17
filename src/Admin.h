@@ -13,7 +13,8 @@
 #include "EfficiencyCalculator.h"
 using namespace std;
 
-class Admin {
+class Admin
+{
 private:
     vector<Employee> employees;
     vector<Task> tasks;
@@ -30,7 +31,7 @@ private:
 
 public:
     Admin();
-    
+
     // Admin Operations
     void addEmployee();
     void addDepartment();
@@ -45,23 +46,23 @@ public:
     void monthlyPerformanceSummary();
     void viewAuditLog();
     void updateEfficiencyScores();
-    
+
     // Citizen Operations (Feedback)
     void citizenFeedbackPortal();
     void requestOTP();
     void submitFeedback();
-    
+
     // Public Reports
     void viewPublicReports();
-    
+
     // Menu Display
     void displayMainMenu();
     void displayAdminMenu();
     void displayCitizenMenu();
-    
+
     // Authentication
     bool handleAdminLogin();
-    
+
     // Main run method
     void run();
 };
