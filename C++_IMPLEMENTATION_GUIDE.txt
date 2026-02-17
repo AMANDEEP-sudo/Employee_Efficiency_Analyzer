@@ -1,0 +1,472 @@
+================================================================================
+C++ PROJECT IMPLEMENTATION GUIDE
+Government Employee Efficiency Tracker
+================================================================================
+
+PROJECT FOLDER STRUCTURE:
+
+Employee_efficiency_tool/
+├── src/
+│   ├── main.cpp                      # Entry point
+│   ├── Employee.h / Employee.cpp     # Employee class
+│   ├── Task.h / Task.cpp             # Task class
+│   ├── Citizen.h / Citizen.cpp       # Citizen registry
+│   ├── OTPManager.h / OTPManager.cpp # OTP Manager
+│   ├── Feedback.h / Feedback.cpp     # Feedback system
+│   ├── Department.h / Department.cpp # Department
+│   ├── EfficiencyCalculator.h / EfficiencyCalculator.cpp
+│   ├── Database.h / Database.cpp     # File I/O operations
+│   ├── Admin.h / Admin.cpp           # Admin panel
+│   ├── Utils.h / Utils.cpp           # Utility functions
+│   └── Constants.h                   # Global constants
+├── data/
+│   ├── employees.dat                 # Employee records
+│   ├── tasks.dat                     # Task records
+│   ├── citizens.dat                  # Citizen registry
+│   ├── feedback.dat                  # Feedback records
+│   └── audit_log.dat                 # Audit logs
+├── Makefile                          # Build script
+├── README.md                         # Documentation
+└── C++_IMPLEMENTATION_GUIDE.txt      # This file
+
+================================================================================
+1. FILE DESCRIPTIONS
+================================================================================
+
+main.cpp
+- Entry point of the application
+- Displays main menu (Admin / Citizen / Reports / Exit)
+- Handles user input and menu navigation
+- Initializes Admin object for core operations
+
+Employee.h / Employee.cpp
+- Represents an employee in the system
+- Attributes: employee_id, name, department, total_tasks, completed_tasks,
+  efficiency_score, feedback_count, task_ids (vector)
+- Methods: addTask(), completeTask(), updateRating(), getEfficiencyScore()
+
+Task.h / Task.cpp
+- Represents a task assigned to an employee
+- Attributes: task_id, employee_id, description, deadline, completion_date,
+  is_completed, is_delayed
+- Methods: setDeadline(), markComplete(), checkDelay(), isOverdue()
+
+Citizen.h / Citizen.cpp
+- Represents a citizen in simulated Aadhaar registry
+- Attributes: hashed_aadhaar, name, address, mobile, feedback_ids (vector)
+- Methods: validateAadhaar(), hashAadhaar(), addFeedback(), getFeedbackCount()
+
+OTPManager.h / OTPManager.cpp
+- Manages OTP generation and verification
+- Attributes: otp_store (map), otp_expiry_minutes, max_attempts, attempt_counter
+- Methods: generateOTP(), verifyOTP(), checkExpiry(), isMaxAttemptsExceeded()
+
+Feedback.h / Feedback.cpp
+- Represents feedback from a citizen for an employee
+- Attributes: feedback_id, employee_id, hashed_aadhaar, rating (1-5),
+  comment, timestamp, is_submitted
+- Methods: setRating(), setComment(), submitFeedback(), displayFeedback()
+
+Department.h / Department.cpp
+- Manages department-level operations
+- Attributes: dept_name, employee_ids (vector), avg_efficiency
+- Methods: addEmployee(), calculateDepartmentAverage(), rankEmployees()
+
+EfficiencyCalculator.h / EfficiencyCalculator.cpp
+- Calculates employee efficiency scores based on multiple metrics
+- Methods: calculateCompletionRate(), calculateAverageRating(),
+  calculateOnTimePercentage(), applyDelayPenalty(), computeFinalScore()
+
+Database.h / Database.cpp
+- Handles all file I/O and data persistence
+- Methods: saveEmployee(), loadEmployees(), saveTask(), loadTasks(),
+  saveCitizen(), loadCitizens(), saveFeedback(), loadFeedback(),
+  logAudit(), readAuditLog()
+
+Admin.h / Admin.cpp
+- Main control panel managing all system operations
+- Attributes: employees (vector), tasks (vector), citizens (vector),
+  feedbacks (vector), db (Database object)
+- Methods: addEmployee(), assignTask(), viewReport(), generateReport(),
+  updateEfficiencyScores(), handleAdminLogin()
+
+Utils.h / Utils.cpp
+- Utility functions for common operations
+- Functions: inputValidation(), getCurrentDate(), hashString(),
+  generateRandomOTP(), displayMenu(), clearScreen()
+
+Constants.h
+- Global constants used across the application
+- OTP_EXPIRY_MINUTES = 5
+- MAX_OTP_ATTEMPTS = 3
+- MIN_EFFICIENCY_SCORE = 0.0
+- MAX_EFFICIENCY_SCORE = 100.0
+- AADHAAR_LENGTH = 12
+- OTP_LENGTH = 6
+- RATING_MIN = 1
+- RATING_MAX = 5
+
+================================================================================
+2. CLASS STRUCTURES IN DETAIL
+================================================================================
+
+Employee CLASS
+==============
+#include <vector>
+#include <string>
+using namespace std;
+
+class Employee {
+private:
+    int employee_id;
+    string name;
+    string department;
+    int total_tasks;
+    int completed_tasks;
+    double efficiency_score;
+    double total_rating;
+    int feedback_count;
+    vector<int> task_ids;
+
+public:
+    Employee(int id, string n, string d);
+    void addTask(int task_id);
+    void completeTask(int task_id);
+    void updateRating(double rating);
+    double calculateEfficiency();
+    double getEfficiencyScore() const;
+    int getTotalTasks() const;
+    int getCompletedTasks() const;
+    int getFeedbackCount() const;
+    void displayInfo();
+    void display() const;
+};
+
+Task CLASS
+==========
+class Task {
+private:
+    int task_id;
+    int employee_id;
+    string description;
+    string deadline;
+    string completion_date;
+    bool is_completed;
+    bool is_delayed;
+
+public:
+    Task(int tid, int eid, string desc, string dl);
+    void setDeadline(string date);
+    void markComplete(string comp_date);
+    bool checkDelay();
+    bool isOverdue();
+    void displayTask() const;
+    int getTaskId() const;
+    int getEmployeeId() const;
+    bool isCompleted() const;
+    string getDeadline() const;
+};
+
+OTPManager CLASS
+================
+#include <map>
+#include <ctime>
+
+class OTPManager {
+private:
+    map<string, pair<string, time_t>> otp_store;
+    int otp_expiry_minutes;
+    int max_attempts;
+    map<string, int> attempt_counter;
+
+public:
+    OTPManager();
+    string generateOTP(string hashed_aadhaar);
+    bool verifyOTP(string hashed_aadhaar, string entered_otp);
+    bool checkExpiry(time_t timestamp);
+    bool isMaxAttemptsExceeded(string hash);
+    void clearExpiredOTPs();
+    void displayOTP(string otp) const;
+};
+
+Feedback CLASS
+==============
+class Feedback {
+private:
+    int feedback_id;
+    int employee_id;
+    string hashed_citizen_aadhaar;
+    int rating;
+    string comment;
+    string timestamp;
+    bool is_submitted;
+
+public:
+    Feedback(int fid, int eid, string hash);
+    void setRating(int r);
+    void setComment(string c);
+    void submitFeedback();
+    void displayFeedback() const;
+    int getEmployeeID() const;
+    int getRating() const;
+    string getComment() const;
+    bool isSubmitted() const;
+};
+
+Database CLASS
+==============
+#include <fstream>
+#include <vector>
+
+class Database {
+private:
+    string employee_file;
+    string task_file;
+    string citizen_file;
+    string feedback_file;
+    string audit_file;
+
+public:
+    Database();
+    void saveEmployee(Employee& emp);
+    void loadEmployees(vector<Employee>& emps);
+    void saveTask(Task& task);
+    void loadTasks(vector<Task>& tasks);
+    void saveCitizen(Citizen& citizen);
+    void loadCitizens(vector<Citizen>& citizens);
+    void saveFeedback(Feedback& fb);
+    void loadFeedback(vector<Feedback>& feedbacks);
+    void logAudit(string action, string user);
+    vector<string> readAuditLog();
+};
+
+Admin CLASS
+===========
+class Admin {
+private:
+    vector<Employee> employees;
+    vector<Task> tasks;
+    vector<Citizen> citizens;
+    vector<Feedback> feedbacks;
+    Database db;
+
+public:
+    Admin();
+    void addEmployee();
+    void addDepartment();
+    void assignTask();
+    void markTaskComplete();
+    void viewEmployeeReport();
+    void generateDepartmentReport();
+    void departmentWiseRanking();
+    void viewAllFeedback();
+    void monthlyPerformanceSummary();
+    void viewAuditLog();
+    void updateEfficiencyScores();
+    void displayMainMenu();
+    void handleAdminLogin();
+    void run();
+};
+
+================================================================================
+3. EFFICIENCY SCORE CALCULATION ALGORITHM
+================================================================================
+
+Formula:
+efficiency_score = (completion_rate * 50) + (average_rating * 30) 
+                   + (on_time_percentage * 20) - delay_penalty
+
+Where:
+- completion_rate = completed_tasks / total_tasks
+- average_rating = total_rating / feedback_count (normalized to 0-100)
+- on_time_percentage = tasks_completed_before_deadline / total_tasks
+- delay_penalty = number_of_delayed_tasks * 2
+
+Final Score Range: 0 to 100 (clamped)
+
+Example:
+- completion_rate = 0.8 (80%)
+- average_rating = 4.2/5 = 0.84 -> 84 (out of 100)  
+- on_time_percentage = 0.9 (90%)
+- delay_penalty = 2 tasks * 2 = 4
+
+Score = (0.8 * 50) + (84 * 30/100) + (0.9 * 20) - 4
+       = 40 + 25.2 + 18 - 4
+       = 79.2
+
+================================================================================
+4. COMPILATION INSTRUCTIONS
+================================================================================
+
+WINDOWS (Command Prompt / PowerShell):
+-----------
+cd Employee_efficiency_tool
+g++ -std=c++17 -o efficiency_tracker.exe src/main.cpp src/Employee.cpp src/Task.cpp src/Citizen.cpp src/OTPManager.cpp src/Feedback.cpp src/Department.cpp src/EfficiencyCalculator.cpp src/Database.cpp src/Admin.cpp src/Utils.cpp
+
+Or shorter (glob pattern):
+g++ -std=c++17 -o efficiency_tracker.exe src/*.cpp
+
+Run:
+efficiency_tracker.exe
+
+LINUX / MAC:
+-----------
+cd Employee_efficiency_tool
+g++ -std=c++17 -o efficiency_tracker src/main.cpp src/Employee.cpp src/Task.cpp src/Citizen.cpp src/OTPManager.cpp src/Feedback.cpp src/Department.cpp src/EfficiencyCalculator.cpp src/Database.cpp src/Admin.cpp src/Utils.cpp
+
+Or shorter:
+g++ -std=c++17 -o efficiency_tracker src/*.cpp
+
+Run:
+./efficiency_tracker
+
+USING MAKEFILE:
+-----------
+make clean
+make
+make run
+
+VISUAL STUDIO (Windows):
+-----------
+1. Create new C++ Console Project
+2. Copy all .h files to project
+3. Copy all .cpp files to project
+4. Add all files to project
+5. Set main.cpp as startup file
+6. Press F5 to compile and run
+
+================================================================================
+5. DATA FILE FORMATS (.dat files)
+================================================================================
+
+employees.dat
+-----------
+Format: id|name|department|total_tasks|completed_tasks|efficiency_score|feedback_count
+
+Example:
+1|John Doe|IT|10|8|75.5|5
+2|Jane Smith|HR|12|11|82.3|6
+
+tasks.dat
+-----------
+Format: task_id|employee_id|description|deadline|completion_date|status|is_delayed
+
+Example:
+1|1|Complete Report|2024-02-20|2024-02-18|Completed|0
+2|1|Code Review|2024-02-25||Pending|0
+
+citizens.dat
+-----------
+Format: hashed_aadhaar|name|address|mobile
+
+Example:
+a1b2c3d4e5f6|Raj Kumar|123 Main St|9876543210
+x7y8z9m0n1o|Priya Singh|456 Oak Ave|9123456789
+
+feedback.dat
+-----------
+Format: feedback_id|employee_id|hashed_aadhaar|rating|comment|timestamp|submitted
+
+Example:
+1|1|a1b2c3d4e5f6|5|Excellent service|2024-02-16 10:30|1
+2|1|x7y8z9m0n1o|4|Good work|2024-02-16 11:15|1
+
+audit_log.dat
+-----------
+Format: timestamp|action|user
+
+Example:
+2024-02-16 09:00:00|EMPLOYEE_ADDED|admin
+2024-02-16 09:05:00|TASK_ASSIGNED|admin
+2024-02-16 10:30:00|FEEDBACK_SUBMITTED|citizen_a1b2c3
+
+================================================================================
+6. MAIN MENU FLOW
+================================================================================
+
+MAIN MENU
+=========
+========================================
+GOVERNMENT EMPLOYEE EFFICIENCY TRACKER
+========================================
+1. Admin Login
+2. Citizen Feedback Portal
+3. View Public Reports
+4. Exit
+
+ADMIN MENU (After Login)
+=======================
+===== ADMIN PANEL =====
+1. Add Employee
+2. Add Department
+3. Assign Task
+4. Mark Task Complete
+5. View Employee Details
+6. Generate Efficiency Report
+7. Department-wise Ranking
+8. View All Feedback
+9. Monthly Performance Summary
+10. View Audit Log
+11. Logout
+
+CITIZEN FEEDBACK MENU
+====================
+===== CITIZEN FEEDBACK SYSTEM =====
+1. Enter Aadhaar ID
+2. Request OTP
+3. Verify OTP
+4. Submit Feedback
+5. Exit
+
+================================================================================
+7. QUICK START CHECKLIST
+================================================================================
+
+[ ] Create project folder: mkdir Employee_efficiency_tool
+[ ] Create src folder: mkdir src
+[ ] Create data folder: mkdir data
+[ ] Create all .h header files in src/
+[ ] Create all .cpp implementation files in src/
+[ ] Create main.cpp in src/
+[ ] Create Makefile in root directory
+[ ] Verify all file names match class names
+[ ] Compile: g++ -std=c++17 -o efficiency_tracker src/*.cpp
+[ ] Run: ./efficiency_tracker (or efficiency_tracker.exe on Windows)
+[ ] Test Admin login functionality
+[ ] Test employee creation
+[ ] Test task assignment
+[ ] Test citizen feedback system
+[ ] Verify OTP generation and validation
+[ ] Check data files are created in data/ folder
+[ ] Verify efficiency scores calculated correctly
+
+================================================================================
+8. IMPORTANT NOTES
+================================================================================
+
+1. OTP Expiry: Set to 5 minutes. Check timestamp before accepting OTP.
+
+2. Aadhaar Hashing: Use string hashing (simple hash or MD5) for 
+   simulated Aadhaar storage. Do NOT store plaintext.
+
+3. Duplicate Feedback: Check if feedback already exists for the same 
+   citizen-employee pair before allowing submission.
+
+4. Efficiency Calculation: Run after each feedback or task completion 
+   to keep scores updated.
+
+5. File I/O: Use binary mode for better performance or text mode
+   with pipe-delimited format for human-readable files.
+
+6. Error Handling: Validate all inputs (dates, ratings, IDs, OTP).
+
+7. Menu System: Use switch-case statements for clean menu handling.
+
+8. Data Persistence: Load data at program start, save after each operation.
+
+9. Console Clearing: Use system("clear") on Linux/Mac or 
+   system("cls") on Windows.
+
+10. Timestamps: Use ctime library or <chrono> for current date/time.
+
+================================================================================

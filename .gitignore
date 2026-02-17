@@ -1,0 +1,92 @@
+# C++ Ignores
+*.o
+*.obj
+*.exe
+*.dll
+*.dylib
+*.a
+*.lib
+*.so
+*.so.*
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile.user
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Compiled binaries
+/efficiency_tracker
+/efficiency_tracker.exe
+/build/
+/dist/
+
+# Python Ignores
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.venv
+
+# IDE Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-workspace
+*.sublime-project
+
+# Project Specific
+data/*.dat
+data/*.csv
+!data/.gitkeep
+*.dat
+*.csv
+
+# OS Files
+Thumbs.db
+.DS_Store
+.directory
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Test outputs
+test_output/
+coverage/
+htmlcov/
+
+# VS Code Workspace
+.vscode/settings.local.json

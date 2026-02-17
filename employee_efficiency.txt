@@ -1,0 +1,149 @@
+SOFTWARE REQUIREMENT SPECIFICATION (SRS)
+
+Project Title: Government Employee Efficiency Tracker with Aadhaar-Based
+OTP Verified Public Feedback System (Simulation Model)
+
+1. INTRODUCTION
+
+1.1 Purpose This document specifies the complete software requirements
+for the Government Employee Efficiency Tracker system. The system is
+designed to monitor employee performance, manage task assignments, and
+collect verified public feedback through a simulated Aadhaar-based OTP
+authentication mechanism.
+
+1.2 Scope The system provides: - Employee and department management -
+Task assignment and deadline tracking - Efficiency score calculation -
+Simulated Aadhaar validation (12-digit format check) - OTP generation
+and verification - Verified citizen feedback submission - Duplicate
+feedback prevention - Department-wise performance reporting
+
+1.3 Intended Audience This document is intended for: - Developers -
+Project supervisors - Evaluators - Academic reviewers
+
+1.4 Definitions OTP – One Time Password Efficiency Score – Performance
+metric calculated for employees Citizen Registry – Simulated Aadhaar
+database Admin – System controller Department Head – Supervisory
+authority
+
+2. OVERALL DESCRIPTION
+
+2.1 Product Perspective The system is a standalone C++ console-based
+application developed using: - Object-Oriented Programming (OOP) -
+Standard Template Library (STL) - File Handling or MySQL for persistent
+storage
+
+2.2 Product Functions - Add and manage employees - Assign and track
+tasks - Detect task delays - Register citizens (simulated Aadhaar
+registry) - Generate and validate OTP - Allow verified feedback
+submission - Calculate efficiency scores - Generate analytical reports
+
+2.3 User Classes Admin – Full system access Department Head – Task
+assignment and monitoring Employee – View assigned tasks Citizen –
+Submit verified feedback
+
+2.4 Operating Environment - Windows or Linux OS - C++ Compiler (GCC /
+MinGW / Visual Studio) - Optional MySQL Server
+
+3. SYSTEM ARCHITECTURE
+
+Three-Tier Architecture:
+
+1.  Presentation Layer – Console-based UI
+2.  Application Logic Layer – Business logic & validation
+3.  Data Storage Layer – File system or MySQL database
+
+Core Modules: - Employee Management Module - Task Management Module -
+Citizen Registry Module - OTP Manager Module - Feedback Management
+Module - Performance Analytics Module
+
+4. FUNCTIONAL REQUIREMENTS
+
+Employee Management: FR1: Add employee records FR2: Assign tasks with
+deadlines FR3: Track task completion FR4: Detect delayed tasks
+
+Aadhaar Simulation: FR5: Validate 12-digit Aadhaar format FR6: Hash
+Aadhaar ID before storage FR7: Fetch citizen data after OTP verification
+
+OTP Verification: FR8: Generate 6-digit random OTP FR9: OTP expiry after
+2–5 minutes FR10: Maximum 3 OTP attempts
+
+Feedback System: FR11: Only verified citizens can submit feedback FR12:
+One feedback per citizen per task FR13: Rating scale 1–5 FR14: Feedback
+cannot be modified after submission FR15: Efficiency score updates
+automatically
+
+Reporting: FR16: Generate employee efficiency report FR17:
+Department-wise ranking FR18: Monthly performance summary
+
+5. NON-FUNCTIONAL REQUIREMENTS
+
+Security: - Aadhaar ID hashing - OTP expiry and attempt limitation -
+Role-based authentication - Audit logs
+
+Performance: - Handle minimum 1000 records - Efficient data retrieval
+
+Reliability: - Persistent data storage - Input validation and error
+handling
+
+Usability: - Menu-driven interface - Clear error messages
+
+6. ALGORITHMS
+
+OTP Generation Algorithm: 1. Generate random 6-digit number 2. Store OTP
+with timestamp 3. Allow maximum 3 attempts 4. Validate expiry before
+verification
+
+Efficiency Calculation: completion_rate = completed_tasks / total_tasks
+average_rating = total_rating / total_feedback
+
+efficiency_score = (completion_rate * 50) + (average_rating * 30) +
+(on_time_percentage * 20) - delay_penalty
+
+7. DATABASE DESIGN
+
+Employees Table: - employee_id (Primary Key) - name - department -
+efficiency_score
+
+Tasks Table: - task_id (Primary Key) - employee_id (Foreign Key) -
+deadline - completion_date - status
+
+Citizens Table: - hashed_aadhaar (Primary Key) - name - address - mobile
+
+Feedback Table: - feedback_id (Primary Key) - employee_id (Foreign
+Key) - citizen_hash (Foreign Key) - rating - comment
+
+8. SYSTEM FLOW
+
+Admin Flow: Login -> Add Employee -> Assign Task -> View Reports
+
+Citizen Feedback Flow: Enter Aadhaar -> Validate -> Generate OTP ->
+Verify OTP -> Fetch Data -> Submit Feedback -> Update Efficiency
+
+9. TESTING STRATEGY
+
+Unit Testing: - Test employee addition - Test OTP generation - Test
+feedback submission
+
+Integration Testing: - Test OTP + feedback flow - Test efficiency update
+
+System Testing: - Full workflow validation
+
+Security Testing: - OTP expiry validation - Duplicate feedback
+prevention
+
+10. FUTURE ENHANCEMENTS
+
+-   GUI implementation using Qt
+-   Web-based deployment
+-   Real SMS API integration
+-   Sentiment analysis
+-   Data visualization dashboard
+-   Cloud hosting support
+
+CONCLUSION
+
+The Government Employee Efficiency Tracker with Aadhaar-Based OTP
+Simulation ensures transparency, accountability, and verified public
+participation. The system integrates OOP concepts, data structures,
+security mechanisms, and analytical evaluation to provide a robust
+academic project solution.

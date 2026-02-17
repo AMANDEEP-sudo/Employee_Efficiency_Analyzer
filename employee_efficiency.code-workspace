@@ -1,0 +1,35 @@
+{
+    "folders": [
+        {
+            "path": ".",
+            "name": "Employee Efficiency Tracker"
+        }
+    ],
+    "settings": {
+        "C_Cpp.default.cppStandard": "c++17",
+        "C_Cpp.default.cStandard": "c11",
+        "python.linting.enabled": true,
+        "editor.formatOnSave": true,
+        "editor.rulers": [80, 120]
+    },
+    "extensions": {
+        "recommendations": [
+            "ms-vscode.cpptools",
+            "ms-python.python",
+            "GitHub.copilot",
+            "eamodio.gitlens"
+        ]
+    },
+    "launch": {
+        "configurations": [
+            {
+                "name": "Run GUI",
+                "preLaunchTask": "run_gui"
+            },
+            {
+                "name": "Run Console",
+                "preLaunchTask": "run_console"
+            }
+        ]
+    }
+}
