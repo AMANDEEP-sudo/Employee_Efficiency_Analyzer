@@ -1,0 +1,20 @@
+{
+    "recommendations": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
+        "ms-python.python",
+        "ms-python.debugpy",
+        "ms-python.vscode-pylance",
+        "mhutchie.git-graph",
+        "donjayamanne.githistory",
+        "ms-vscode.makefile-tools",
+        "ms-vscode-remote.remote-wsl",
+        "gruntfuggly.todo-tree",
+        "Codeium.codeium",
+        "GitHub.copilot",
+        "eamodio.gitlens",
+        "ms-vscode.github-universe",
+        "charliermarsh.ruff",
+        "xaver.clang-format"
+    ]
+}

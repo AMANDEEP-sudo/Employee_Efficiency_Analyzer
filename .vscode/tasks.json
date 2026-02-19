@@ -1,0 +1,149 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build_cpp",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-std=c++17",
+                "-Wall",
+                "-Wextra",
+                "-o",
+                "efficiency_tracker.exe",
+                "src/*.cpp"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "build_cpp_debug",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-std=c++17",
+                "-g",
+                "-O0",
+                "-Wall",
+                "-Wextra",
+                "-o",
+                "efficiency_tracker.exe",
+                "src/*.cpp"
+            ],
+            "group": {
+                "kind": "build"
+            },
+            "presentation": {
+                "reveal": "always"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "cmd",
+            "args": [
+                "/c",
+                "if exist efficiency_tracker.exe del efficiency_tracker.exe && if exist *.o del *.o && echo Cleaned!"
+            ],
+            "presentation": {
+                "reveal": "always"
+            }
+        },
+        {
+            "label": "setup_imgui",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                ".\\setup_imgui.ps1"
+            ],
+            "group": {
+                "kind": "build"
+            },
+            "presentation": {
+                "reveal": "always"
+            }
+        },
+        {
+            "label": "build_imgui",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "all"
+            ],
+            "group": {
+                "kind": "build"
+            },
+            "presentation": {
+                "reveal": "always"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "dependsOn": "setup_imgui"
+        },
+        {
+            "label": "run_gui_imgui",
+            "type": "shell",
+            "command": ".\\efficiency_tracker.exe",
+            "group": {
+                "kind": "test"
+            },
+            "presentation": {
+                "reveal": "always"
+            },
+            "dependsOn": "build_imgui"
+        },
+        {
+            "label": "run_console",
+            "type": "shell",
+            "command": ".\\efficiency_tracker.exe",
+            "group": {
+                "kind": "test"
+            },
+            "presentation": {
+                "reveal": "always"
+            },
+            "dependsOn": "build_cpp"
+        },
+        {
+            "label": "make_all",
+            "type": "shell",
+            "command": "make",
+            "args": [],
+            "group": {
+                "kind": "build"
+            },
+            "presentation": {
+                "reveal": "always"
+            }
+        },
+        {
+            "label": "make_run",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "run"
+            ],
+            "group": {
+                "kind": "test"
+            },
+            "presentation": {
+                "reveal": "always"
+            }
+        }
+    ]
+}

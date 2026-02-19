@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-# C++ Ignores
+# ==================== C++ Compilation ====================
 *.o
 *.obj
 *.exe
@@ -9,22 +8,31 @@
 *.lib
 *.so
 *.so.*
+*.slo
+*.lo
+*.lai
+*.la
+*.ilk
+*.pdb
+*.dwo
+
+# ==================== Build & CMake ====================
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
 Makefile.user
-*.swp
-*.swo
-*~
-.DS_Store
-
-# Compiled binaries
-/efficiency_tracker
-/efficiency_tracker.exe
 /build/
 /dist/
+/bin/
 
-# Python Ignores
+# ==================== Compiled binaries ====================
+/efficiency_tracker
+/efficiency_tracker.exe
+efficiency_tracker
+*.out
+*.app
+
+# ==================== Python & Virtual Environments ====================
 __pycache__/
 *.py[cod]
 *$py.class
@@ -32,7 +40,6 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -45,15 +52,26 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
 
-# Virtual Environments
+# ==================== Virtual Environments ====================
 venv/
 env/
 ENV/
 .venv
+.env
+virtualenv/
 
-# IDE Files
-.vscode/
+# ==================== IDE & Editor Files ====================
+.vscode/settings.local.json
 .idea/
 *.swp
 *.swo
@@ -61,76 +79,52 @@ ENV/
 .DS_Store
 *.sublime-workspace
 *.sublime-project
-
-# Project Specific
-data/*.dat
-data/*.csv
-!data/.gitkeep
-*.dat
-*.csv
-
-# OS Files
-Thumbs.db
-.DS_Store
-.directory
-
-# Logs
-*.log
-logs/
-
-# Temporary files
-*.tmp
-*.temp
+.vim
 *.bak
 *.backup
 
-# Test outputs
+# ==================== ImGui (auto-downloaded) ====================
+imgui/
+*.imgui.ini
+
+# ==================== Project Specific ====================
+data/*.dat
+data/*.csv
+*.dat
+*.csv
+old_files/
+temp_files/
+testing/
+
+# ==================== OS Files ====================
+Thumbs.db
+.directory
+.DS_Store
+desktop.ini
+
+# ==================== Logs & Temporary ====================
+*.log
+logs/
+*.tmp
+*.temp
 test_output/
 coverage/
 htmlcov/
 
-# VS Code Workspace
-.vscode/settings.local.json
-=======
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Linker files
-*.ilk
-
-# Debugger Files
-*.pdb
-
-# Compiled Dynamic libraries
+# ==================== Compiled Python ====================
+*.pyc
+*.pyo
+*.pyd
 *.so
-*.dylib
-*.dll
+.Python
+setuptools/
 
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# debug information files
-*.dwo
->>>>>>> 422675dab248b403a1c181e5f362fe25e096dbf0
+# ==================== Do NOT Ignore ====================
+!.vscode/
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/c_cpp_properties.json
+!.vscode/extensions.json
+!data/
+!data/.gitkeep
